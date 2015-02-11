@@ -21,6 +21,6 @@ public class Hello2Controller implements Controller {
 
         logger.info("Returning hello view");
 
-        return new ModelAndView("hello2.jsp");
+        return new ModelAndView("hello2");
     }
 }

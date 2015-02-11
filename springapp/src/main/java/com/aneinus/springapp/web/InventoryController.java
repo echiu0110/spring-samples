@@ -12,17 +12,33 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
-public class HelloController implements Controller {
+import com.aneinus.springapp.service.ProductManager;
+
+public class InventoryController implements Controller {
 
     protected final Log logger = LogFactory.getLog(getClass());
+    
+    private ProductManager productManager;
 
+    public void	setProductManager(ProductManager p)
+    {
+    	this.productManager = p;
+    }
+    
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
     	String now = (new Date()).toString();
+    	
+    	Map<String, Object> myModel = new HashMap<String, Object>();
+    	myModel.put("now", now);
+    	myModel.put("products", this.productManager.getProducts());
+    	
         logger.info("Returning hello view");
 
-        return new ModelAndView("hello", "now", now);
+        return new ModelAndView("hello", "model", myModel);
     }
 }
